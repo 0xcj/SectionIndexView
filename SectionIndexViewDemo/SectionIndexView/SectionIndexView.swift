@@ -14,19 +14,19 @@ import UIKit
 @objc protocol SectionIndexViewDataSource: AnyObject {
     func numberOfItemViews(in sectionIndexView: SectionIndexView) -> Int
     
-    func sectionIndexView(sectionIndexView: SectionIndexView, itemViewAt section: Int) -> SectionIndexViewItem
+    func sectionIndexView(_ sectionIndexView: SectionIndexView, itemViewAt section: Int) -> SectionIndexViewItem
     
-    @objc optional func sectionIndexView(sectionIndexView: SectionIndexView, itemPreviewFor section: Int) -> SectionIndexViewItemPreview
+    @objc optional func sectionIndexView(_ sectionIndexView: SectionIndexView, itemPreviewFor section: Int) -> SectionIndexViewItemPreview
 }
 
 //MARK: - SectionIndexViewDelegate
 
 @objc protocol SectionIndexViewDelegate: AnyObject {
-    @objc optional func sectionIndexView(sectionIndexView: SectionIndexView, didSelect section: Int)
+    @objc optional func sectionIndexView(_ sectionIndexView: SectionIndexView, didSelect section: Int)
     
-    @objc optional func sectionIndexView(sectionIndexView: SectionIndexView, toucheMoved section: Int)
+    @objc optional func sectionIndexView(_ sectionIndexView: SectionIndexView, toucheMoved section: Int)
     
-    @objc optional func sectionIndexView(sectionIndexView: SectionIndexView, touchesCancelled section: Int)
+    @objc optional func sectionIndexView(_ sectionIndexView: SectionIndexView, toucheCancelled section: Int)
     
 }
 
@@ -70,12 +70,12 @@ class SectionIndexView: UIView {
             itemHeight =  bounds.height / CGFloat(numberOfItemViews)
             itemPreviews = Array<SectionIndexViewItemPreview>.init()
             for i in 0..<numberOfItemViews {
-                if let itemView = dataSource?.sectionIndexView(sectionIndexView: self, itemViewAt: i) {
+                if let itemView = dataSource?.sectionIndexView(self, itemViewAt: i) {
                     items.append(itemView)
                     itemView.frame = CGRect.init(x: 0, y: itemHeight * CGFloat(i), width: bounds.width, height: itemHeight)
                     addSubview(itemView)
                 }
-                if let itemPreview = dataSource?.sectionIndexView?(sectionIndexView: self, itemPreviewFor: i) {
+                if let itemPreview = dataSource?.sectionIndexView?(self, itemPreviewFor: i) {
                     itemPreviews?.append(itemPreview)
                 }
             }
@@ -164,7 +164,7 @@ class SectionIndexView: UIView {
             for i in 0..<items.count {
                 item = items[i]
                 if touchItem != item && point.y <= (item.frame.origin.y + item.frame.size.height) && point.y >= item.frame.origin.y {
-                    if  delegate?.sectionIndexView?(sectionIndexView: self, toucheMoved: i) != nil {
+                    if  delegate?.sectionIndexView?(self, toucheMoved: i) != nil {
                         //
                     } else {
                         selectItem(at: i)
@@ -179,7 +179,7 @@ class SectionIndexView: UIView {
     
     override internal func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         if let section = getSectionBy(touches: touches) {
-            if delegate?.sectionIndexView?(sectionIndexView: self, didSelect: section) != nil {
+            if delegate?.sectionIndexView?(self, didSelect: section) != nil {
                 //
             }else {
                 selectItem(at: section)
@@ -190,14 +190,14 @@ class SectionIndexView: UIView {
         
         for i in 0..<items.count {
             if items[i] == currentItem {
-                delegate?.sectionIndexView?(sectionIndexView: self, didSelect: i)
+                delegate?.sectionIndexView?(self, didSelect: i)
             }
         }
     }
     
     override internal func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
         if  let section = getSectionBy(touches: touches) {
-            if delegate?.sectionIndexView?(sectionIndexView: self, touchesCancelled: section) != nil {
+            if delegate?.sectionIndexView?(self, toucheCancelled: section) != nil {
                 //
             }else {
                 currentItemPreview?.removeFromSuperview()

@@ -66,26 +66,26 @@ extension CircleViewController: SectionIndexViewDataSource, SectionIndexViewDele
         return indexData.count
     }
     
-    func sectionIndexView(sectionIndexView: SectionIndexView, itemViewAt section: Int) -> SectionIndexViewItem {
+    func sectionIndexView(_ sectionIndexView: SectionIndexView, itemViewAt section: Int) -> SectionIndexViewItem {
         let itemView = SectionIndexViewItem.init()
         itemView.title = indexData[section]
         return itemView
     }
     
-    func sectionIndexView(sectionIndexView: SectionIndexView, itemPreviewFor section: Int) -> SectionIndexViewItemPreview {
+    func sectionIndexView(_ sectionIndexView: SectionIndexView, itemPreviewFor section: Int) -> SectionIndexViewItemPreview {
         let preview = SectionIndexViewItemPreview.init(title: indexData[section], type: .circle)
         preview.color = .red
         preview.titleColor = .red
         return preview
     }
     
-    func sectionIndexView(sectionIndexView: SectionIndexView, toucheMoved section: Int) {
+    func sectionIndexView(_ sectionIndexView: SectionIndexView, toucheMoved section: Int) {
         sectionIndexView.selectItem(at: section)
         sectionIndexView.showItemPreview(at: section)
         tableView.scrollToRow(at: IndexPath.init(row: 0, section: section), at: .top, animated: false)
     }
     
-    func sectionIndexView(sectionIndexView: SectionIndexView, didSelect section: Int) {
+    func sectionIndexView(_ sectionIndexView: SectionIndexView, didSelect section: Int) {
         sectionIndexView.selectItem(at: section)
         sectionIndexView.showItemPreview(at: section, hideAfter: 0.2)
         tableView.scrollToRow(at: IndexPath.init(row: 0, section: section), at: .top, animated: false)
