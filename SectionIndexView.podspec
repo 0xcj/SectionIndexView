@@ -22,7 +22,7 @@ Pod::Spec.new do |s|
   s.homepage     = "https://github.com/1-ChenJian/SectionIndexView"
   s.framework    = "UIKit"
   s.source       = { :git => "https://github.com/1-ChenJian/SectionIndexView.git", :tag => s.version }
-  s.source_files = "SectionIndexViewDemo/SectionIndexView/**/*.{h,m}"
+  s.source_files = "SectionIndexViewDemo/SectionIndexView/**/*.{h,m,swift}"
   s.license      = "MIT"  
   s.platform     = :ios
   s.platform     = :ios, "8.0"
