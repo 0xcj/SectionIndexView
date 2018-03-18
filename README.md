@@ -24,12 +24,12 @@ Init  `SectionIndexView `.
 
 ```
 override func viewDidLoad() {
-......
-indexView = SectionIndexView.init(frame:frame)
-indexView.dataSource = self
-indexView.delegate = self
-view.addSubview(indexView)
-indexView.loadData()     // important
+    ......
+    indexView = SectionIndexView.init(frame:frame)
+    indexView.dataSource = self
+    indexView.delegate = self
+    view.addSubview(indexView)
+    indexView.loadData()     // important
 }
 
 ```
@@ -37,18 +37,18 @@ Conforming to protocol `SectionIndexViewDataSource`.
 
 ```
 func numberOfItemViews(in sectionIndexView: SectionIndexView) -> Int {
-return indexData.count
+    return indexData.count
 }
 
 func sectionIndexView(_ sectionIndexView: SectionIndexView, itemViewAt section: Int) -> SectionIndexViewItem {
-let itemView = SectionIndexViewItem.init()
-itemView.title = indexData[section]
-return itemView
+    let itemView = SectionIndexViewItem.init()
+    itemView.title = indexData[section]
+    return itemView
 }
 // when you need SectionIndexViewItemPreview
 func sectionIndexView(_ sectionIndexView: SectionIndexView, itemPreviewFor section: Int) -> SectionIndexViewItemPreview {
-let preview = SectionIndexViewItemPreview.init(title: indexData[section], type: .default)
-return preview
+    let preview = SectionIndexViewItemPreview.init(title: indexData[section], type: .default)
+    return preview
 }
 ```
 
