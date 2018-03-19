@@ -19,9 +19,9 @@ Pod::Spec.new do |s|
   s.version      = "0.0.1"
   s.summary      = "Customizing the UITableView's section index written in Swift"
   s.author       = { "ChenJian" => "57150718@qq.com" }
-  s.homepage     = "https://github.com/1-ChenJian/SectionIndexView"
+  s.homepage     = "https://github.com/CJYS/SectionIndexView"
   s.framework    = "UIKit"
-  s.source       = { :git => "https://github.com/1-ChenJian/SectionIndexView.git", :tag => s.version }
+  s.source       = { :git => "https://github.com/CJYS/SectionIndexView.git", :tag => s.version }
   s.source_files = "SectionIndexViewDemo/SectionIndexView/**/*.{h,m,swift}"
   s.license      = "MIT"  
   s.platform     = :ios
