@@ -1,4 +1,4 @@
-[中文介绍](http://)
+[中文介绍](https://www.jianshu.com/p/18db920693cf)
 
 # SectionIndexView
 SectionIndexView which could be highly customized, can easily be used to customize the UITableView's section index .
