@@ -26,6 +26,7 @@ Pod::Spec.new do |s|
   s.license      = "MIT"  
   s.platform     = :ios
   s.platform     = :ios, "8.0"
+  s.swift_version = "4.0"
   s.requires_arc = true
   end
 
