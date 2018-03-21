@@ -98,12 +98,22 @@ class SectionIndexViewItemPreview: UIView {
         case .drip:
             let view = UIView.init(frame: bounds)
             
-            let shapeLayer = CAShapeLayer.init()
+            let x = bounds.width * 0.5
+            let y = bounds.height * 0.5
+            let radius       = bounds.width * 0.5
+            let startAngle   = CGFloat(Double.pi * 0.25)
+            let endAngle     = CGFloat(Double.pi * 1.75 )
+            
+            let path = UIBezierPath.init(arcCenter: CGPoint.init(x: x, y: y), radius: radius, startAngle:startAngle, endAngle: endAngle, clockwise: true)
+            
+            let lineX = x * 2 + 10
+            let lineY = y
+            path.addLine(to: CGPoint.init(x: lineX, y: lineY))
+            path.close()
+          
+            let shapeLayer   = CAShapeLayer.init()
             shapeLayer.frame = bounds
             shapeLayer.fillColor = #colorLiteral(red: 0.7881487012, green: 0.7882850766, blue: 0.7881400585, alpha: 1)
-            let path = UIBezierPath.init(arcCenter: CGPoint.init(x: bounds.width * 0.5, y: bounds.height * 0.5), radius: bounds.width * 0.5, startAngle:CGFloat(Double.pi * 0.25), endAngle: CGFloat(Double.pi * 1.75 ), clockwise: true)
-            path.addLine(to: CGPoint.init(x: bounds.width + 10, y: bounds.height * 0.5))
-            path.close()
             shapeLayer.path = path.cgPath
             view.layer.addSublayer(shapeLayer)
             self.shapeLayer = shapeLayer
@@ -115,7 +125,9 @@ class SectionIndexViewItemPreview: UIView {
     }
     
     init() {
-        super.init(frame: CGRect.init(x: 0, y: 0, width: 54, height: 54))
+        let width  = 54
+        let height = width
+        super.init(frame: CGRect.init(x: 0, y: 0, width: width, height: height))
     }
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")

@@ -19,10 +19,17 @@ class EmptyViewController: UIViewController {
     var tableView: UITableView!
     var indexView: SectionIndexView!
     
+    var disableScrollSelect = false
+
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "rect"
-        tableView = UITableView.init(frame: view.bounds, style: .plain)
+        title = "empty"
+        
+        let y = CGFloat(view.bounds.height == 812 ? 88 : 64)
+        let frame = CGRect.init(x: 0, y: y, width: view.bounds.width, height: view.bounds.height - y)
+        
+        tableView = UITableView.init(frame: frame, style: .plain)
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: reuseIdentifier)
         tableView.delegate = self
         tableView.dataSource = self
@@ -48,7 +55,7 @@ extension EmptyViewController: UITableViewDelegate, UITableViewDataSource {
         return indexData.count
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return tableViewData.count
+        return Int(arc4random()) % tableViewData.count + 1
     }
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return indexData[section]
@@ -57,6 +64,12 @@ extension EmptyViewController: UITableViewDelegate, UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath)
         cell.textLabel?.text = tableViewData[indexPath.row]
         return cell
+    }
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        guard disableScrollSelect == false else { return }
+        if let section = tableView.indexPathsForVisibleRows?.first?.section, indexView.currentItem != indexView.item(at: section) {
+            indexView.selectItem(at: section)
+        }
     }
 }
 
@@ -104,13 +117,17 @@ extension EmptyViewController: SectionIndexViewDataSource, SectionIndexViewDeleg
     func sectionIndexView(_ sectionIndexView: SectionIndexView, toucheMoved section: Int) {
         sectionIndexView.selectItem(at: section)
         sectionIndexView.showItemPreview(at: section)
+        disableScrollSelect = true
         tableView.scrollToRow(at: IndexPath.init(row: 0, section: section), at: .top, animated: false)
+        disableScrollSelect = false
     }
     
     func sectionIndexView(_ sectionIndexView: SectionIndexView, didSelect section: Int) {
         sectionIndexView.selectItem(at: section)
         sectionIndexView.showItemPreview(at: section, hideAfter: 0.2)
+        disableScrollSelect = true
         tableView.scrollToRow(at: IndexPath.init(row: 0, section: section), at: .top, animated: false)
+        disableScrollSelect = false
     }
 }
 

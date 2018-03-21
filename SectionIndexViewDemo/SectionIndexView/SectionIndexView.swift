@@ -50,29 +50,42 @@ class SectionIndexView: UIView {
     
     var isItemPreviewAlwaysInCenter = false
     
+    var itemHeight: CGFloat? {
+        get {
+            return _itemHeight
+        }
+    }
+
+    var currentItem: SectionIndexViewItem? {
+        get {
+            return _currentItem
+        }
+    }
+    
     
     //MARK: - private
     
     private var items = Array<SectionIndexViewItem>.init()
     private var itemPreviews: Array<SectionIndexViewItemPreview>?
     
-    private var itemHeight: CGFloat = 0
+    private var _itemHeight: CGFloat?
     
-    private var currentItem: SectionIndexViewItem?
+    private var _currentItem: SectionIndexViewItem?
     
     private var touchItem: SectionIndexViewItem?
     
     fileprivate var currentItemPreview: UIView?
     
-    
+    // MARK: - Func
     func loadData() {
         if let numberOfItemViews = dataSource?.numberOfItemViews(in: self) {
-            itemHeight =  bounds.height / CGFloat(numberOfItemViews)
+            let height = bounds.height / CGFloat(numberOfItemViews)
+            _itemHeight = height
             itemPreviews = Array<SectionIndexViewItemPreview>.init()
             for i in 0..<numberOfItemViews {
                 if let itemView = dataSource?.sectionIndexView(self, itemViewAt: i) {
                     items.append(itemView)
-                    itemView.frame = CGRect.init(x: 0, y: itemHeight * CGFloat(i), width: bounds.width, height: itemHeight)
+                    itemView.frame = CGRect.init(x: 0, y: height * CGFloat(i), width: bounds.width, height: height)
                     addSubview(itemView)
                 }
                 if let itemPreview = dataSource?.sectionIndexView?(self, itemPreviewFor: i) {
@@ -102,12 +115,12 @@ class SectionIndexView: UIView {
             return
         }
         deselectCurrentItem()
-        currentItem = items[section]
+        _currentItem = items[section]
         items[section].select()
     }
     
     func deselectCurrentItem() {
-        currentItem?.deselect()
+        _currentItem?.deselect()
     }
     
     func showItemPreview(at section:Int, hideAfter delay: Double) {
@@ -123,7 +136,7 @@ class SectionIndexView: UIView {
             let count = itemPreviews?.count,
             section < count && section >= 0,
             let preview = itemPreviews?[section],
-            let currentItem = currentItem
+            let currentItem = _currentItem
             else { return }
         currentItemPreview?.removeFromSuperview()
         
@@ -156,7 +169,7 @@ class SectionIndexView: UIView {
         }
         return nil
     }
-    
+    // MARK: - TouchesEvent
     override internal func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         if let touch = touches.first {
             let point = touch.location(in: self)
@@ -189,7 +202,7 @@ class SectionIndexView: UIView {
         }
         
         for i in 0..<items.count {
-            if items[i] == currentItem {
+            if items[i] == _currentItem {
                 delegate?.sectionIndexView?(self, didSelect: i)
             }
         }

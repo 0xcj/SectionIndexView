@@ -80,8 +80,10 @@ class SectionIndexViewItem: UIView {
         imageView?.frame = bounds
         
         let width = min(bounds.width - selectedMargin, bounds.height - selectedMargin)
-        selectedView.frame = CGRect.init(x: 0, y: 0 , width: width, height: width)
-        selectedView.center = CGPoint.init(x: bounds.width * 0.5, y: bounds.height * 0.5)
+        let height = width
+        let center = CGPoint.init(x: bounds.width * 0.5, y: bounds.height * 0.5)
+        selectedView.frame = CGRect.init(x: 0, y: 0 , width: width, height: height)
+        selectedView.center = center
         selectedView.layer.cornerRadius = selectedView.bounds.width * 0.5
     }
     

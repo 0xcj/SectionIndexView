@@ -57,24 +57,23 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let cell = tableView.cellForRow(at: indexPath),
-            let text = cell.textLabel?.text {
-            switch text {
-            case Type.default.rawValue:
+            let text = cell.textLabel?.text,
+            let type = Type.init(rawValue: text) {
+            switch type {
+            case Type.default:
                 navigationController?.pushViewController(DefaultViewController(), animated: true)
                 break
-            case Type.rect.rawValue:
+            case Type.rect:
                 navigationController?.pushViewController(RectViewController(), animated: true)
                 break
-            case Type.circle.rawValue:
+            case Type.circle:
                 navigationController?.pushViewController(CircleViewController(), animated: true)
                 break
-            case Type.drip.rawValue:
+            case Type.drip:
                 navigationController?.pushViewController(DripViewController(), animated: true)
                 break
-            case Type.empty.rawValue:
+            case Type.empty:
                 navigationController?.pushViewController(EmptyViewController(), animated: true)
-                break
-            default:
                 break
             }
         }
