@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
   #
 
   s.name         = "SectionIndexView"
-  s.version      = "0.0.2"
+  s.version      = "0.0.3"
   s.summary      = "Customizing the UITableView's section index written in Swift"
   s.author       = { "ChenJian" => "57150718@qq.com" }
   s.homepage     = "https://github.com/CJYS/SectionIndexView"
@@ -26,7 +26,7 @@ Pod::Spec.new do |s|
   s.license      = "MIT"  
   s.platform     = :ios
   s.platform     = :ios, "8.0"
-  s.swift_version = "4.0"
+  s.swift_version = "4.2"
   s.requires_arc = true
   end
 
