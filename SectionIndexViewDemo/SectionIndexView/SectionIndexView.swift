@@ -39,24 +39,22 @@ import UIKit
 //MARK: - SectionIndexView
 class SectionIndexView: UIView {
     
-    weak var dataSource: SectionIndexViewDataSource?
-    weak var delegate:   SectionIndexViewDelegate?
-    
-    var isShowItemPreview: Bool = true
-    
-    var itemPreviewDirection: SectionIndexViewItemPreviewDirection = .left
-    
-    var itemPreviewMargin: CGFloat = 0
-    
-    var isItemPreviewAlwaysInCenter = false
-    
-    var itemHeight: CGFloat? {
-        get {
-            return _itemHeight
+    @objc weak var dataSource: SectionIndexViewDataSource? {
+        didSet {
+            loadView()
         }
     }
-
-    var currentItem: SectionIndexViewItem? {
+    @objc weak var delegate:   SectionIndexViewDelegate?
+    
+    @objc var isShowItemPreview: Bool = true
+    
+    @objc var itemPreviewDirection: SectionIndexViewItemPreviewDirection = .left
+    
+    @objc var itemPreviewMargin: CGFloat = 0
+    
+    @objc var isItemPreviewAlwaysInCenter = false
+    
+    @objc var currentItem: SectionIndexViewItem? {
         get {
             return _currentItem
         }
@@ -66,10 +64,9 @@ class SectionIndexView: UIView {
     //MARK: - private
     
     private var items = Array<SectionIndexViewItem>.init()
-    private var itemPreviews: Array<SectionIndexViewItemPreview>?
     
-    private var _itemHeight: CGFloat?
-    
+    private var itemPreviews = Array<SectionIndexViewItemPreview>.init()
+
     private var _currentItem: SectionIndexViewItem?
     
     private var touchItem: SectionIndexViewItem?
@@ -77,10 +74,9 @@ class SectionIndexView: UIView {
     fileprivate var currentItemPreview: UIView?
     
     // MARK: - Func
-    func loadData() {
+    @objc func loadView() {
         if let numberOfItemViews = dataSource?.numberOfItemViews(in: self) {
             let height = bounds.height / CGFloat(numberOfItemViews)
-            _itemHeight = height
             itemPreviews = Array<SectionIndexViewItemPreview>.init()
             for i in 0..<numberOfItemViews {
                 if let itemView = dataSource?.sectionIndexView(self, itemViewAt: i) {
@@ -89,28 +85,28 @@ class SectionIndexView: UIView {
                     addSubview(itemView)
                 }
                 if let itemPreview = dataSource?.sectionIndexView?(self, itemPreviewFor: i) {
-                    itemPreviews?.append(itemPreview)
+                    itemPreviews.append(itemPreview)
                 }
             }
         }
     }
     
-    func reloadData() {
+    @objc func reloadData() {
         for itemView in self.items {
             itemView.removeFromSuperview()
         }
         items.removeAll()
-        loadData()
+        loadView()
     }
     
-    func item(at section: Int) -> SectionIndexViewItem? {
+    @objc func item(at section: Int) -> SectionIndexViewItem? {
         if section >= items.count || section < 0 {
             return nil
         }
         return items[section]
     }
     
-    func selectItem(at section: Int) {
+    @objc func selectItem(at section: Int) {
         if section >= items.count || section < 0 {
             return
         }
@@ -119,25 +115,24 @@ class SectionIndexView: UIView {
         items[section].select()
     }
     
-    func deselectCurrentItem() {
+    @objc func deselectCurrentItem() {
         _currentItem?.deselect()
     }
     
-    func showItemPreview(at section:Int, hideAfter delay: Double) {
+    @objc func showItemPreview(at section:Int, hideAfter delay: Double) {
         showItemPreview(at: section)
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + delay) {
             self.currentItemPreview?.removeFromSuperview()
         }
     }
     
-    func showItemPreview(at section:Int) {
+    @objc func showItemPreview(at section:Int) {
         guard
             isShowItemPreview == true,
-            let count = itemPreviews?.count,
-            section < count && section >= 0,
-            let preview = itemPreviews?[section],
+            section < itemPreviews.count && section >= 0,
             let currentItem = _currentItem
             else { return }
+        let preview = itemPreviews[section]
         currentItemPreview?.removeFromSuperview()
         
         var x,
@@ -218,4 +213,6 @@ class SectionIndexView: UIView {
         }
     }
 }
+
+
 

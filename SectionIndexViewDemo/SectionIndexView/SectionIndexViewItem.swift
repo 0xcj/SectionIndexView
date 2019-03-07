@@ -11,54 +11,64 @@ import UIKit
 //MARK: - ZLSectionIndexViewItem
 class SectionIndexViewItem: UIView {
     
-    var isSeleted = false
-    var image: UIImage? {
+    @objc var isSeleted = false
+    @objc var image: UIImage? {
         didSet{
-            initImageView()
-            imageView?.image = image
+            imageView.image = image
         }
     }
-    var selectedImage: UIImage? {
+    @objc var selectedImage: UIImage? {
         didSet{
-            initImageView()
-            imageView?.highlightedImage = selectedImage
+            imageView.highlightedImage = selectedImage
         }
     }
-    var title: String? {
+    @objc var title: String? {
         didSet {
-            initTitleLabel()
-            titleLabel?.text = title
-            
+            titleLabel.text = title
         }
     }
-    var titleFont: UIFont? {
+    @objc var titleFont: UIFont? {
         didSet {
-            initTitleLabel()
-            titleLabel?.font = titleFont
+            titleLabel.font = titleFont
         }
     }
-    var titleColor: UIColor? {
+    @objc var titleColor: UIColor? {
         didSet{
-            initTitleLabel()
-            titleLabel?.textColor = titleColor
+            titleLabel.textColor = titleColor
         }
     }
-    var titleSelectedColor: UIColor? {
+    @objc var titleSelectedColor: UIColor? {
         didSet{
-            initTitleLabel()
-            titleLabel?.highlightedTextColor = titleSelectedColor
+            titleLabel.highlightedTextColor = titleSelectedColor
         }
     }
     
-    var selectedColor = UIColor.red {
+    @objc var selectedColor = UIColor.red {
         didSet {
             selectedView.backgroundColor = selectedColor
         }
     }
-    var selectedMargin: CGFloat = 0
     
-    private var titleLabel: UILabel?
-    private var imageView: UIImageView?
+    @objc var selectedMargin: CGFloat = 0
+    
+    private var titleLabel: UILabel = {
+        let label = UILabel.init()
+        label.adjustsFontSizeToFitWidth = true
+        label.numberOfLines = 0
+        label.backgroundColor = .clear
+        label.textColor = .black
+        label.highlightedTextColor = .white
+        label.textAlignment = .center
+        label.font = UIFont.systemFont(ofSize: 14)
+        return label
+    }()
+    
+    private lazy var imageView: UIImageView = {
+        let v = UIImageView.init()
+        v.contentMode = .center
+        return v
+    }()
+    
     private var selectedView: UIView
     
     override init(frame: CGRect) {
@@ -67,7 +77,8 @@ class SectionIndexViewItem: UIView {
         selectedView.alpha = 0
         
         super.init(frame: frame)
-        
+        addSubview(imageView)
+        addSubview(titleLabel)
         insertSubview(selectedView, at: 0)
     }
     
@@ -76,8 +87,8 @@ class SectionIndexViewItem: UIView {
     }
     
     override func layoutSubviews() {
-        titleLabel?.frame = bounds
-        imageView?.frame = bounds
+        titleLabel.frame = bounds
+        imageView.frame = bounds
         
         let width = min(bounds.width - selectedMargin, bounds.height - selectedMargin)
         let height = width
@@ -87,38 +98,17 @@ class SectionIndexViewItem: UIView {
         selectedView.layer.cornerRadius = selectedView.bounds.width * 0.5
     }
     
-    func select() {
+    @objc func select() {
         isSeleted = true
-        titleLabel?.isHighlighted = true
-        imageView?.isHighlighted = true
+        titleLabel.isHighlighted = true
+        imageView.isHighlighted = true
         selectedView.alpha = 1
     }
     
-    func deselect() {
+    @objc func deselect() {
         selectedView.alpha = 0
         isSeleted = false
-        titleLabel?.isHighlighted = false
-        imageView?.isHighlighted = false
-    }
-    
-    private func initTitleLabel() {
-        guard titleLabel == nil else { return }
-        let label = UILabel.init()
-        label.adjustsFontSizeToFitWidth = true
-        label.numberOfLines = 0
-        label.backgroundColor = .clear
-        label.textColor = .black
-        label.highlightedTextColor = .white
-        label.textAlignment = .center
-        label.font = UIFont.systemFont(ofSize: 14)
-        addSubview(label)
-        titleLabel = label
-    }
-    private func initImageView() {
-        guard imageView == nil else { return }
-        let view = UIImageView.init()
-        view.contentMode = .center
-        addSubview(view)
-        self.imageView = view
+        titleLabel.isHighlighted = false
+        imageView.isHighlighted = false
     }
 }

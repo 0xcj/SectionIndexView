@@ -16,65 +16,90 @@ import UIKit
     case empty
 }
 
-
 class SectionIndexViewItemPreview: UIView {
     
-    var titleColor: UIColor? {
+    @objc var titleColor: UIColor? {
         didSet {
             titleLabel.textColor = titleColor
         }
     }
-    var titleFont: UIFont? {
+    @objc var titleFont: UIFont? {
         didSet {
             titleLabel.font = titleFont
         }
     }
-    var color: UIColor? {
+    @objc var color: UIColor? {
         didSet {
             switch type {
-            case .default?, .rect? :
+            case .default, .rect :
                 titleLabel.backgroundColor = color
-            case .circle? :
+            case .circle :
                 titleLabel.layer.borderColor = color?.cgColor
-            case .drip? :
-                shapeLayer?.fillColor = color?.cgColor
+            case .drip :
+                shapeLayer.fillColor = color?.cgColor
             default:
                 break
             }
         }
     }
     
-    private var type: SectionIndexViewItemPreviewType?
-    private var titleLabel = UILabel.init()
-    private var shapeLayer: CAShapeLayer?
+    private var type: SectionIndexViewItemPreviewType = .default
     
-    convenience init(title: String?) {
-        self.init(title: title, type: .default)
-    }
+    private lazy var titleLabel: UILabel = {
+        let lab = UILabel.init()
+        lab.frame = bounds
+        lab.textColor = .white
+        lab.font = UIFont.boldSystemFont(ofSize: 35)
+        lab.adjustsFontSizeToFitWidth = true
+        lab.textAlignment = .center
+        return lab
+    }()
     
-    convenience init(title: String?, type: SectionIndexViewItemPreviewType) {
-        self.init(title: title, type: type, image: nil)
-    }
-    
-    convenience init(title: String?, type:SectionIndexViewItemPreviewType, image: UIImage?) {
-        self.init()
+    private lazy var shapeLayer: CAShapeLayer = {
+        let x = bounds.width * 0.5
+        let y = bounds.height * 0.5
+        let radius = bounds.width * 0.5
+        let startAngle = CGFloat(Double.pi * 0.25)
+        let endAngle = CGFloat(Double.pi * 1.75 )
         
-        self.type = type
+        let path = UIBezierPath.init(arcCenter: CGPoint.init(x: x, y: y), radius: radius, startAngle:startAngle, endAngle: endAngle, clockwise: true)
         
-        if image != nil {
-            let imageView = UIImageView.init(frame: bounds)
-            imageView.image = image
-            imageView.contentMode = .center
+        let lineX = x * 2 + 10
+        let lineY = y
+        path.addLine(to: CGPoint.init(x: lineX, y: lineY))
+        path.close()
+        let shapeLayer = CAShapeLayer.init()
+        shapeLayer.frame = bounds
+        shapeLayer.fillColor = #colorLiteral(red: 0.7881487012, green: 0.7882850766, blue: 0.7881400585, alpha: 1)
+        shapeLayer.path = path.cgPath
+        return shapeLayer
+    }()
+    
+    private lazy var dripView: UIView = {
+        let view = UIView.init(frame: bounds)
+        view.layer.addSublayer(shapeLayer)
+        view.addSubview(titleLabel)
+        return view
+    }()
+    
+    private lazy var imageView: UIImageView = {
+        let v = UIImageView.init(frame: bounds)
+        v.contentMode = .center
+        return v
+    }()
+    
+     init(title: String? = nil, type:SectionIndexViewItemPreviewType = .default, image: UIImage? = nil) {
+        super.init(frame: CGRect.init(x: 0, y: 0, width: 54, height: 54))
+        if let image = image {
             addSubview(imageView)
+            imageView.image = image
         }
-        
-        titleLabel.frame = bounds
+        self.type = type
+        setPreview(title: title)
+    }
+    
+    private func setPreview(title: String?) {
         titleLabel.text = title
-        titleLabel.textColor = .white
-        titleLabel.font = UIFont.boldSystemFont(ofSize: 35)
-        titleLabel.adjustsFontSizeToFitWidth = true
-        titleLabel.textAlignment = .center
-        
         switch type {
         case .default:
             titleLabel.backgroundColor = #colorLiteral(red: 0.7881487012, green: 0.7882850766, blue: 0.7881400585, alpha: 1)
@@ -96,39 +121,12 @@ class SectionIndexViewItemPreview: UIView {
             titleLabel.layer.borderColor = #colorLiteral(red: 0.002085188171, green: 0.8053717613, blue: 0.8079184294, alpha: 1)
             addSubview(titleLabel)
         case .drip:
-            let view = UIView.init(frame: bounds)
-            
-            let x = bounds.width * 0.5
-            let y = bounds.height * 0.5
-            let radius       = bounds.width * 0.5
-            let startAngle   = CGFloat(Double.pi * 0.25)
-            let endAngle     = CGFloat(Double.pi * 1.75 )
-            
-            let path = UIBezierPath.init(arcCenter: CGPoint.init(x: x, y: y), radius: radius, startAngle:startAngle, endAngle: endAngle, clockwise: true)
-            
-            let lineX = x * 2 + 10
-            let lineY = y
-            path.addLine(to: CGPoint.init(x: lineX, y: lineY))
-            path.close()
-          
-            let shapeLayer   = CAShapeLayer.init()
-            shapeLayer.frame = bounds
-            shapeLayer.fillColor = #colorLiteral(red: 0.7881487012, green: 0.7882850766, blue: 0.7881400585, alpha: 1)
-            shapeLayer.path = path.cgPath
-            view.layer.addSublayer(shapeLayer)
-            self.shapeLayer = shapeLayer
-            view.addSubview(titleLabel)
-            addSubview(view)
+            addSubview(dripView)
         case .empty:
             break
         }
     }
     
-    init() {
-        let width  = 54
-        let height = width
-        super.init(frame: CGRect.init(x: 0, y: 0, width: width, height: height))
-    }
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

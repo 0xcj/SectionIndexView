@@ -39,7 +39,6 @@ class CircleViewController: UIViewController {
         indexView.dataSource = self
         indexView.delegate = self
         view.addSubview(indexView)
-        indexView.loadData()
     }
     
     override func didReceiveMemoryWarning() {

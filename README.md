@@ -29,7 +29,6 @@ override func viewDidLoad() {
     indexView.dataSource = self
     indexView.delegate = self
     view.addSubview(indexView)
-    indexView.loadData()     // important
 }
 
 ```

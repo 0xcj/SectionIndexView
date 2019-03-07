@@ -41,7 +41,6 @@ class EmptyViewController: UIViewController {
         indexView.isItemPreviewAlwaysInCenter = true
         indexView.itemPreviewMargin = 120
         view.addSubview(indexView)
-        indexView.loadData()
     }
     
     override func didReceiveMemoryWarning() {
