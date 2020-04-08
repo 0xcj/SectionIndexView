@@ -16,17 +16,16 @@ Pod::Spec.new do |s|
   #
 
   s.name         = "SectionIndexView"
-  s.version      = "0.0.3"
+  s.version      = "1.0.0"
   s.summary      = "Customizing the UITableView's section index written in Swift"
   s.author       = { "ChenJian" => "57150718@qq.com" }
-  s.homepage     = "https://github.com/CJYS/SectionIndexView"
+  s.homepage     = "https://github.com/0xcj/SectionIndexView"
   s.framework    = "UIKit"
-  s.source       = { :git => "https://github.com/CJYS/SectionIndexView.git", :tag => s.version }
+  s.source       = { :git => "https://github.com/0xcj/SectionIndexView.git", :tag => s.version }
   s.source_files = "SectionIndexViewDemo/SectionIndexView/**/*.{h,m,swift}"
-  s.license      = "MIT"  
-  s.platform     = :ios
+  s.license      = "MIT"
   s.platform     = :ios, "9.0"
-  s.swift_version = "5"
+  s.swift_versions = ['4.0', '4.2', '5.0']
   s.requires_arc = true
   end
 
