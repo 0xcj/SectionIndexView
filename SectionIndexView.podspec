@@ -25,8 +25,8 @@ Pod::Spec.new do |s|
   s.source_files = "SectionIndexViewDemo/SectionIndexView/**/*.{h,m,swift}"
   s.license      = "MIT"  
   s.platform     = :ios
-  s.platform     = :ios, "8.0"
-  s.swift_version = "4.2"
+  s.platform     = :ios, "9.0"
+  s.swift_version = "5"
   s.requires_arc = true
   end
 

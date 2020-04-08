@@ -1,216 +1,172 @@
 //
-//  ViewController.swift
-//  SectionIndexViewDemo
+//  SectionIndexView.swift
 //
-//  Created by 陈健 on 2018/3/13.
-//  Copyright © 2018年 ChenJian. All rights reserved.
+//  https://github.com/0xcj/SectionIndexView
+//
+//
 //
 
 import UIKit
 
+public let SectionIndexViewTouchesOccurredNotification = "SectionIndexViewTouchesOccurredNotification"
+public let SectionIndexViewTouchesEndedNotification = "SectionIndexViewTouchesEndedNotification"
 
 //MARK: - SectionIndexViewDataSource
 
-@objc protocol SectionIndexViewDataSource: AnyObject {
-    func numberOfItemViews(in sectionIndexView: SectionIndexView) -> Int
-    
-    func sectionIndexView(_ sectionIndexView: SectionIndexView, itemViewAt section: Int) -> SectionIndexViewItem
-    
-    @objc optional func sectionIndexView(_ sectionIndexView: SectionIndexView, itemPreviewFor section: Int) -> SectionIndexViewItemPreview
+@objc public protocol SectionIndexViewDataSource: NSObjectProtocol {
+    @objc func numberOfItems(in sectionIndexView: SectionIndexView) -> Int
+    @objc func sectionIndexView(_ sectionIndexView: SectionIndexView, itemAt section: Int) -> SectionIndexViewItem
 }
 
 //MARK: - SectionIndexViewDelegate
 
-@objc protocol SectionIndexViewDelegate: AnyObject {
-    @objc optional func sectionIndexView(_ sectionIndexView: SectionIndexView, didSelect section: Int)
-    
-    @objc optional func sectionIndexView(_ sectionIndexView: SectionIndexView, toucheMoved section: Int)
-    
-    @objc optional func sectionIndexView(_ sectionIndexView: SectionIndexView, toucheCancelled section: Int)
-    
+@objc public protocol SectionIndexViewDelegate: NSObjectProtocol {
+    @objc func sectionIndexView(_ sectionIndexView: SectionIndexView, didSelect section: Int)
+    @objc func sectionIndexViewToucheEnded(_ sectionIndexView: SectionIndexView)
 }
 
-
-//MARK: - SectionIndexViewItemPreviewDirection
-@objc enum SectionIndexViewItemPreviewDirection: Int {
-    case left,right
-}
 
 //MARK: - SectionIndexView
-class SectionIndexView: UIView {
-    
-    @objc weak var dataSource: SectionIndexViewDataSource? {
-        didSet {
-            loadView()
-        }
-    }
-    @objc weak var delegate:   SectionIndexViewDelegate?
-    
-    @objc var isShowItemPreview: Bool = true
-    
-    @objc var itemPreviewDirection: SectionIndexViewItemPreviewDirection = .left
-    
-    @objc var itemPreviewMargin: CGFloat = 0
-    
-    @objc var isItemPreviewAlwaysInCenter = false
-    
-    @objc var currentItem: SectionIndexViewItem? {
-        get {
-            return _currentItem
-        }
-    }
-    
-    
-    //MARK: - private
-    
-    private var items = Array<SectionIndexViewItem>.init()
-    
-    private var itemPreviews = Array<SectionIndexViewItemPreview>.init()
+public class SectionIndexView: UIView {
 
-    private var _currentItem: SectionIndexViewItem?
+    @objc public weak var dataSource: SectionIndexViewDataSource? { didSet { reloadData() } }
+    @objc public weak var delegate: SectionIndexViewDelegate?
+        
+    @objc public var itemIndicatorHorizontalOffset: CGFloat = 0
+    @objc public var isItemIndicatorAlwaysInCenter = false
     
-    private var touchItem: SectionIndexViewItem?
+    @objc public private(set) var selectedItem: SectionIndexViewItem?
+    @objc public private(set) var isTouching = false
     
-    fileprivate var currentItemPreview: UIView?
+    @available(iOS 10.0, *)
+    private lazy var generator: UIImpactFeedbackGenerator = {
+        return UIImpactFeedbackGenerator.init(style: .light)
+    }()
+        
+    private var items = [SectionIndexViewItem]()
+    private var itemLayoutConstraints = [SectionIndexViewItem: [NSLayoutConstraint]]()
     
+            
     // MARK: - Func
-    @objc func loadView() {
-        if let numberOfItemViews = dataSource?.numberOfItemViews(in: self) {
-            let height = bounds.height / CGFloat(numberOfItemViews)
-            itemPreviews = Array<SectionIndexViewItemPreview>.init()
-            for i in 0..<numberOfItemViews {
-                if let itemView = dataSource?.sectionIndexView(self, itemViewAt: i) {
-                    items.append(itemView)
-                    itemView.frame = CGRect.init(x: 0, y: height * CGFloat(i), width: bounds.width, height: height)
-                    addSubview(itemView)
-                }
-                if let itemPreview = dataSource?.sectionIndexView?(self, itemPreviewFor: i) {
-                    itemPreviews.append(itemPreview)
-                }
-            }
-        }
-    }
     
-    @objc func reloadData() {
-        for itemView in self.items {
-            itemView.removeFromSuperview()
+    @objc public func reloadData() {
+        for item in items {
+            item.removeFromSuperview()
+            item.indicator?.removeFromSuperview()
+            item.isHidden = false
         }
         items.removeAll()
         loadView()
     }
     
-    @objc func item(at section: Int) -> SectionIndexViewItem? {
-        if section >= items.count || section < 0 {
-            return nil
+    private func loadView() {
+        guard let numberOfItems = dataSource?.numberOfItems(in: self) else { return }
+        items = Array(0..<numberOfItems).compactMap { dataSource?.sectionIndexView(self, itemAt: $0)}
+        setItemsLayoutConstraint()
+    }
+     
+    private func setItemsLayoutConstraint() {
+        guard !items.isEmpty else { return }
+        let heightMultiplier = CGFloat(1) / CGFloat(items.count)
+        for (i, item) in items.enumerated() {
+            item.translatesAutoresizingMaskIntoConstraints = false
+            addSubview(item)
+            if let oldConstraints = itemLayoutConstraints[item] {
+                NSLayoutConstraint.deactivate(oldConstraints)
+            }
+            let constraints = [
+                item.leadingAnchor.constraint(equalTo: leadingAnchor),
+                item.trailingAnchor.constraint(equalTo: trailingAnchor),
+                item.heightAnchor.constraint(equalTo: heightAnchor, multiplier: heightMultiplier),
+                item.topAnchor.constraint(equalTo: i == 0 ? topAnchor : items[i - 1].bottomAnchor)
+            ]
+            NSLayoutConstraint.activate(constraints)
+            itemLayoutConstraints[item] = constraints
         }
+    }
+    
+    @objc public func item(at section: Int) -> SectionIndexViewItem? {
+        guard section >= 0, section < items.count else { return nil }
         return items[section]
     }
     
-    @objc func selectItem(at section: Int) {
-        if section >= items.count || section < 0 {
-            return
-        }
-        deselectCurrentItem()
-        _currentItem = items[section]
-        items[section].select()
+    @objc public func impact() {
+        guard #available(iOS 10.0, *) else { return }
+        generator.prepare()
+        generator.impactOccurred()
     }
     
-    @objc func deselectCurrentItem() {
-        _currentItem?.deselect()
+    @objc public func selectItem(at section: Int) {
+        guard let item = item(at: section) else { return }
+        item.isSelected = true
+        selectedItem = item
     }
     
-    @objc func showItemPreview(at section:Int, hideAfter delay: Double) {
-        showItemPreview(at: section)
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + delay) {
-            self.currentItemPreview?.removeFromSuperview()
-        }
+    @objc public func deselectCurrentItem() {
+        selectedItem?.isSelected = false
+        selectedItem = nil
     }
     
-    @objc func showItemPreview(at section:Int) {
-        guard
-            isShowItemPreview == true,
-            section < itemPreviews.count && section >= 0,
-            let currentItem = _currentItem
-            else { return }
-        let preview = itemPreviews[section]
-        currentItemPreview?.removeFromSuperview()
-        
-        var x,
-        y:CGFloat
-        switch self.itemPreviewDirection {
-        case .right:
-            x = currentItem.bounds.width + preview.bounds.width * 0.5 + itemPreviewMargin
-        case .left:
-            x = -(preview.bounds.width * 0.5 + itemPreviewMargin)
-        }
-        let centerY = currentItem.center.y
-        y = isItemPreviewAlwaysInCenter == true ? (bounds.height - currentItem.bounds.height) * 0.5 : centerY
-        preview.center = CGPoint.init(x: x, y: y)
-        
-        addSubview(preview)
-        currentItemPreview = preview
-    }
-    
-    private func getSectionBy(touches: Set<UITouch>) -> Int? {
-        if let touch = touches.first {
-            let point = touch.location(in: self)
-            var item: SectionIndexViewItem
-            for i in 0..<items.count {
-                item = items[i]
-                if item.frame.contains(point) == true {
-                    return i
-                }
-            }
-        }
-        return nil
-    }
-    // MARK: - TouchesEvent
-    override internal func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        if let touch = touches.first {
-            let point = touch.location(in: self)
-            var item: SectionIndexViewItem
-            for i in 0..<items.count {
-                item = items[i]
-                if touchItem != item && point.y <= (item.frame.origin.y + item.frame.size.height) && point.y >= item.frame.origin.y {
-                    if  delegate?.sectionIndexView?(self, toucheMoved: i) != nil {
-                        //
-                    } else {
-                        selectItem(at: i)
-                        showItemPreview(at: i)
-                    }
-                    touchItem = item
-                    return
-                }
-            }
+    @objc public func showCurrentItemIndicator() {
+        guard let selectedItem = selectedItem, let indicator = selectedItem.indicator else { return }
+        if indicator.superview == nil {
+            let centerY = selectedItem.center.y
+            let x = -(indicator.bounds.width * 0.5 + 20 - itemIndicatorHorizontalOffset)
+            let y = isItemIndicatorAlwaysInCenter ? (bounds.height - selectedItem.bounds.height) * 0.5 : centerY
+            indicator.center = CGPoint.init(x: x, y: y)
+            addSubview(indicator)
+        } else {
+            indicator.alpha = 1
         }
     }
     
-    override internal func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        if let section = getSectionBy(touches: touches) {
-            if delegate?.sectionIndexView?(self, didSelect: section) != nil {
-                //
-            }else {
-                selectItem(at: section)
-                showItemPreview(at: section, hideAfter: 0.2)
-            }
-            return
-        }
-        
-        for i in 0..<items.count {
-            if items[i] == _currentItem {
-                delegate?.sectionIndexView?(self, didSelect: i)
-            }
-        }
+    @objc public func hideCurrentItemIndicator() {
+        self.selectedItem?.indicator?.alpha = 0
     }
     
-    override internal func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
-        if  let section = getSectionBy(touches: touches) {
-            if delegate?.sectionIndexView?(self, toucheCancelled: section) != nil {
-                //
-            }else {
-                currentItemPreview?.removeFromSuperview()
-            }
-        }
+    
+    // MARK: -  Touches handle
+    private func point(_ point: CGPoint, isIn view: UIView) -> Bool {
+        return point.y <= (view.frame.origin.y + view.frame.size.height) && point.y >= view.frame.origin.y
+    }
+    
+    private func getSectionBy(_ touches: Set<UITouch>) -> Int? {
+        guard let touch = touches.first else { return nil }
+        let p = touch.location(in: self)
+        return items.enumerated().filter { point(p, isIn: $0.element) }.compactMap { $0.offset }.first
+    }
+    
+    private func touchesOccurred(_ touches: Set<UITouch>) {
+        isTouching = true
+        guard let section = getSectionBy(touches) else { return }
+        guard let item = item(at: section), selectedItem != item else { return }
+        delegate?.sectionIndexView(self, didSelect: section)
+        NotificationCenter.default.post(name: NSNotification.Name.init(SectionIndexViewTouchesOccurredNotification), object: section)
+    }
+    
+    private func touchesEnded() {
+        delegate?.sectionIndexViewToucheEnded(self)
+        NotificationCenter.default.post(name: NSNotification.Name.init(SectionIndexViewTouchesEndedNotification), object: nil)
+        isTouching = false
+    }
+    
+    
+    // MARK: - UIView TouchesEvent
+    
+    override public func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        touchesOccurred(touches)
+    }
+    
+    override public func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+        touchesOccurred(touches)
+    }
+    
+    override public func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        touchesEnded()
+    }
+    
+    override public func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
+        touchesEnded()
     }
 }
 

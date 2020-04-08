@@ -1,9 +1,9 @@
 //
 //  AppDelegate.swift
-//  SectionIndexViewDemo
 //
-//  Created by 陈健 on 2018/3/13.
-//  Copyright © 2018年 ChenJian. All rights reserved.
+//  https://github.com/0xcj/SectionIndexView
+//
+//
 //
 
 import UIKit
@@ -14,7 +14,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
 
-    private func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         return true
     }

@@ -7,23 +7,25 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2309EB982382976000275DAA /* UITableView+SectionIndexView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2309EB972382976000275DAA /* UITableView+SectionIndexView.swift */; };
+		2360484C2438772400642930 /* data.json in Resources */ = {isa = PBXBuildFile; fileRef = 2360484B2438772400642930 /* data.json */; };
+		2363E6B9243747DF009F06DD /* Person.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2363E6B8243747DF009F06DD /* Person.swift */; };
 		238D003B2058280500665FD4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 238D003A2058280500665FD4 /* AppDelegate.swift */; };
 		238D003D2058280500665FD4 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 238D003C2058280500665FD4 /* ViewController.swift */; };
 		238D00402058280500665FD4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 238D003E2058280500665FD4 /* Main.storyboard */; };
 		238D00422058280500665FD4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 238D00412058280500665FD4 /* Assets.xcassets */; };
 		238D00452058280500665FD4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 238D00432058280500665FD4 /* LaunchScreen.storyboard */; };
 		238D00502058287D00665FD4 /* SectionIndexViewItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 238D004D2058287D00665FD4 /* SectionIndexViewItem.swift */; };
-		238D00512058287D00665FD4 /* SectionIndexViewItemPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 238D004E2058287D00665FD4 /* SectionIndexViewItemPreview.swift */; };
+		238D00512058287D00665FD4 /* SectionIndexViewItemIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 238D004E2058287D00665FD4 /* SectionIndexViewItemIndicator.swift */; };
 		238D00522058287D00665FD4 /* SectionIndexView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 238D004F2058287D00665FD4 /* SectionIndexView.swift */; };
-		23958259205D33E500886433 /* RectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23958258205D33E500886433 /* RectViewController.swift */; };
-		2395825B205D342200886433 /* CircleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2395825A205D342200886433 /* CircleViewController.swift */; };
-		2395825D205D344500886433 /* DripViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2395825C205D344500886433 /* DripViewController.swift */; };
-		2395825F205D350100886433 /* EmptyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2395825E205D350100886433 /* EmptyViewController.swift */; };
-		C8AB19E9205A04AD001312C3 /* DefaultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8AB19E8205A04AD001312C3 /* DefaultViewController.swift */; };
+		2395825D205D344500886433 /* CusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2395825C205D344500886433 /* CusViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		238D00372058280500665FD4 /* SectionIndexViewDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SectionIndexViewDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		2309EB972382976000275DAA /* UITableView+SectionIndexView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+SectionIndexView.swift"; sourceTree = "<group>"; };
+		2360484B2438772400642930 /* data.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = data.json; sourceTree = "<group>"; };
+		2363E6B8243747DF009F06DD /* Person.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Person.swift; sourceTree = "<group>"; };
+		238D00372058280500665FD4 /* IndexView.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IndexView.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		238D003A2058280500665FD4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		238D003C2058280500665FD4 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		238D003F2058280500665FD4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -31,13 +33,9 @@
 		238D00442058280500665FD4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		238D00462058280500665FD4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		238D004D2058287D00665FD4 /* SectionIndexViewItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SectionIndexViewItem.swift; sourceTree = "<group>"; };
-		238D004E2058287D00665FD4 /* SectionIndexViewItemPreview.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SectionIndexViewItemPreview.swift; sourceTree = "<group>"; };
+		238D004E2058287D00665FD4 /* SectionIndexViewItemIndicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SectionIndexViewItemIndicator.swift; sourceTree = "<group>"; };
 		238D004F2058287D00665FD4 /* SectionIndexView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SectionIndexView.swift; sourceTree = "<group>"; };
-		23958258205D33E500886433 /* RectViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RectViewController.swift; sourceTree = "<group>"; };
-		2395825A205D342200886433 /* CircleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleViewController.swift; sourceTree = "<group>"; };
-		2395825C205D344500886433 /* DripViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DripViewController.swift; sourceTree = "<group>"; };
-		2395825E205D350100886433 /* EmptyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyViewController.swift; sourceTree = "<group>"; };
-		C8AB19E8205A04AD001312C3 /* DefaultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultViewController.swift; sourceTree = "<group>"; };
+		2395825C205D344500886433 /* CusViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CusViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,7 +61,7 @@
 		238D00382058280500665FD4 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				238D00372058280500665FD4 /* SectionIndexViewDemo.app */,
+				238D00372058280500665FD4 /* IndexView.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -71,17 +69,15 @@
 		238D00392058280500665FD4 /* SectionIndexViewDemo */ = {
 			isa = PBXGroup;
 			children = (
-				238D003C2058280500665FD4 /* ViewController.swift */,
-				C8AB19E8205A04AD001312C3 /* DefaultViewController.swift */,
-				23958258205D33E500886433 /* RectViewController.swift */,
-				2395825A205D342200886433 /* CircleViewController.swift */,
-				2395825C205D344500886433 /* DripViewController.swift */,
-				2395825E205D350100886433 /* EmptyViewController.swift */,
-				238D00412058280500665FD4 /* Assets.xcassets */,
 				238D003A2058280500665FD4 /* AppDelegate.swift */,
+				238D003C2058280500665FD4 /* ViewController.swift */,
+				2395825C205D344500886433 /* CusViewController.swift */,
+				2363E6B8243747DF009F06DD /* Person.swift */,
+				238D00412058280500665FD4 /* Assets.xcassets */,
 				238D003E2058280500665FD4 /* Main.storyboard */,
 				238D00432058280500665FD4 /* LaunchScreen.storyboard */,
 				238D00462058280500665FD4 /* Info.plist */,
+				2360484B2438772400642930 /* data.json */,
 			);
 			path = SectionIndexViewDemo;
 			sourceTree = "<group>";
@@ -89,9 +85,10 @@
 		238D004C2058286A00665FD4 /* SectionIndexView */ = {
 			isa = PBXGroup;
 			children = (
+				2309EB972382976000275DAA /* UITableView+SectionIndexView.swift */,
 				238D004F2058287D00665FD4 /* SectionIndexView.swift */,
 				238D004D2058287D00665FD4 /* SectionIndexViewItem.swift */,
-				238D004E2058287D00665FD4 /* SectionIndexViewItemPreview.swift */,
+				238D004E2058287D00665FD4 /* SectionIndexViewItemIndicator.swift */,
 			);
 			path = SectionIndexView;
 			sourceTree = "<group>";
@@ -113,7 +110,7 @@
 			);
 			name = SectionIndexViewDemo;
 			productName = SectionIndexViewDemo;
-			productReference = 238D00372058280500665FD4 /* SectionIndexViewDemo.app */;
+			productReference = 238D00372058280500665FD4 /* IndexView.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -128,6 +125,7 @@
 				TargetAttributes = {
 					238D00362058280500665FD4 = {
 						CreatedOnToolsVersion = 9.2;
+						LastSwiftMigration = 1130;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -158,6 +156,7 @@
 				238D00452058280500665FD4 /* LaunchScreen.storyboard in Resources */,
 				238D00422058280500665FD4 /* Assets.xcassets in Resources */,
 				238D00402058280500665FD4 /* Main.storyboard in Resources */,
+				2360484C2438772400642930 /* data.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -168,16 +167,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C8AB19E9205A04AD001312C3 /* DefaultViewController.swift in Sources */,
 				238D003D2058280500665FD4 /* ViewController.swift in Sources */,
-				2395825F205D350100886433 /* EmptyViewController.swift in Sources */,
 				238D003B2058280500665FD4 /* AppDelegate.swift in Sources */,
 				238D00502058287D00665FD4 /* SectionIndexViewItem.swift in Sources */,
-				238D00512058287D00665FD4 /* SectionIndexViewItemPreview.swift in Sources */,
+				238D00512058287D00665FD4 /* SectionIndexViewItemIndicator.swift in Sources */,
 				238D00522058287D00665FD4 /* SectionIndexView.swift in Sources */,
-				2395825D205D344500886433 /* DripViewController.swift in Sources */,
-				2395825B205D342200886433 /* CircleViewController.swift in Sources */,
-				23958259205D33E500886433 /* RectViewController.swift in Sources */,
+				2363E6B9243747DF009F06DD /* Person.swift in Sources */,
+				2395825D205D344500886433 /* CusViewController.swift in Sources */,
+				2309EB982382976000275DAA /* UITableView+SectionIndexView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -253,7 +250,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -306,7 +303,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
@@ -320,13 +317,14 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = KHFXMKZ8ST;
+				DEVELOPMENT_TEAM = 76TH7FM7MJ;
 				INFOPLIST_FILE = SectionIndexViewDemo/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = SectionIndexViewDemo;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = IndexView;
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -337,13 +335,14 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = KHFXMKZ8ST;
+				DEVELOPMENT_TEAM = 76TH7FM7MJ;
 				INFOPLIST_FILE = SectionIndexViewDemo/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = SectionIndexViewDemo;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = IndexView;
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
