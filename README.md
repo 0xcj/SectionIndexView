@@ -58,7 +58,7 @@ override func viewDidLoad() {
 Please see the demo for more details.
 
 ## Attention
-If your tableView use ```automaticallyAdjustsScrollViewInsets``` or ```contentInsetAdjustmentBehavior```, you need set up <font color=#ff0000>tableViewVisibleOffset</font>, see the following code.
+If your tableView use ```automaticallyAdjustsScrollViewInsets``` or ```contentInsetAdjustmentBehavior```, you need set up [tableViewVisibleOffset](https://github.com/0xcj/SectionIndexView/blob/master/SectionIndexViewDemo/SectionIndexView/UITableView%2BSectionIndexView.swift), see the following code.
 ```swift
 override func viewDidLoad() {
     ......
