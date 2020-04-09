@@ -12,9 +12,6 @@
     </a>
 </p>
 
-## SectionIndexView
-SectionIndexView which could be highly customized, can easily be used to customize the UITableView's section index .
-
 ## Overview
 
 | default | custom | image | 
