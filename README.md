@@ -16,7 +16,7 @@
 
 | default | custom | image | 
 | ------ | ------ | ------ | 
-![Demo Overview](https://github.com/0xcj/SectionIndexView/blob/master/images/default.png) | ![Demo Overview](https://github.com/0xcj/SectionIndexView/blob/master/images/custom.png) | ![Demo Overview](https://github.com/0xcj/SectionIndexView/blob/master/images/image.png)
+![default](https://upload-images.jianshu.io/upload_images/11200375-f16dec23eafc0e3f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240) | ![custom](https://upload-images.jianshu.io/upload_images/11200375-1129a588359d0dca.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240) | ![image](https://upload-images.jianshu.io/upload_images/11200375-79228d354feac9d3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 ## Installation
 ### CocoaPods
