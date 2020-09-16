@@ -27,8 +27,8 @@ pod 'SectionIndexView'
 Drop the swift files inside of [SectionIndexViewDemo/SectionIndexView](https://github.com/0xcj/SectionIndexView/tree/master/SectionIndexViewDemo/SectionIndexView) into your project.
 
 ## Usage
-SectionIndexView is easy to use.
 
+Swift
 ```swift
 override func viewDidLoad() {
     ......
@@ -36,13 +36,45 @@ override func viewDidLoad() {
     let items = titles.compactMap { (title) -> SectionIndexViewItem? in
             let item = SectionIndexViewItemView.init()
             item.title = title
+            item.indicator = SectionIndexViewItemIndicator.init(title: title)
             return item
         }
     self.tableView.sectionIndexView(items: items)
 }
 
 ```
-If you need more permissions，you can use it like this.
+Objective-C
+```objc
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    ......
+    NSMutableArray<UIView<SectionIndexViewItem>*> *items = [[NSMutableArray alloc]init];
+    NSArray *titles = @[@"A",@"B",@"C",@"D",@"E",@"F",@"G"];
+    for (NSString *title in titles) {
+        SectionIndexViewItemView *item = [[SectionIndexViewItemView alloc] init];
+        item.title = title
+        item.indicator = [[SectionIndexViewItemIndicator alloc]initWithTitle:title];
+        [items addObject:item];
+    }
+    [self.tableView sectionIndexViewWithItems:[NSArray arrayWithArray:items]];
+}
+```
+## Attention
+In order to assure `SectionIndexView` has correct scrolling when your navigationBar not hidden and  UITableView  use ` contentInsetAdjustmentBehavior`  or ` automaticallyAdjustsScrollViewInsets`  to adjust content. Set [adjustedContentInset](https://github.com/0xcj/SectionIndexView/blob/master/SectionIndexViewDemo/SectionIndexView/UITableView%2BSectionIndexView.swift) value equal to UITableView’s adjustment content inset
+```swift
+override func viewDidLoad() {
+    ......
+    let navigationBarHeight = self.navigationController.navigationBar.frame.height
+    let statusBarHeight = UIApplication.shared.statusBarFrame.size.height
+    let frame = CGRect.init(x: 0, y: 0, width: width, height: height)
+    let tableView = UITableView.init(frame: frame, style: .plain)
+    let configuration = SectionIndexViewConfiguration.init()
+    configuration.adjustedContentInset = statusBarHeight + navigationBarHeight
+    tableView.sectionIndexView(items: items, configuration: configuration)
+}
+```
+
+If you want to control the UITableView and SectionIndexView manually，you can use it like this. [There is an example.](https://github.com/0xcj/SectionIndexView/blob/master/SectionIndexViewDemo/SectionIndexViewDemo/CusViewController.swift)
 ```swift
 override func viewDidLoad() {
     ......
@@ -53,35 +85,6 @@ override func viewDidLoad() {
 }
 ```
 Please see the demo for more details.
-
-## Attention
-If your tableView use ```automaticallyAdjustsScrollViewInsets``` or ```contentInsetAdjustmentBehavior```, you need set up [tableViewVisibleOffset](https://github.com/0xcj/SectionIndexView/blob/master/SectionIndexViewDemo/SectionIndexView/UITableView%2BSectionIndexView.swift), see the following code.
-```swift
-override func viewDidLoad() {
-    ......
-    let navHeight = self.navigationController.navigationBar.frame.height
-    let statusHeight = UIApplication.shared.statusBarFrame.size.height
-    let frame = CGRect.init(x: 0, y: 0, width: width, height: height)
-    let tableView = UITableView.init(frame: frame, style: .plain)
-    let configuration = SectionIndexViewConfiguration.init()
-    configuration.tableViewVisibleOffset = navHeight + statusHeight
-    tableView.sectionIndexView(items: items, configuration: configuration)
-}
-```
-Or
-```swift
-override func viewDidLoad() {
-    ......
-    let navHeight = self.navigationController.navigationBar.frame.height
-    let statusHeight = UIApplication.shared.statusBarFrame.size.height
-    let y = navHeight + statusHeight
-    let frame = CGRect.init(x: 0, y: y, width: width, height: height)
-    let tableView = UITableView.init(frame: frame, style: .plain)
-    let configuration = SectionIndexViewConfiguration.init()
-    configuration.tableViewVisibleOffset = 0
-    tableView.sectionIndexView(items: items, configuration: configuration)
-}
-```
 
 ## License
 

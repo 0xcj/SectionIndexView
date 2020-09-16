@@ -1,24 +1,86 @@
 //
-//  SectionIndexViewItem.swift
+// https://github.com/0xcj/SectionIndexView
 //
-//  https://github.com/0xcj/SectionIndexView
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
 //
+// The above copyright notice and this permission notice shall be included in all
+// copies or substantial portions of the Software.
 //
-//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+// SOFTWARE.
+
+
+///  ┌─────────────────┐
+///  │                                                             │
+///  │                                                  ┌─┐│              ┌─┐
+///  │                                                  │A ││              │A │        ┌─┐
+///  │                                                  ├─┤│              ├─┤       │ A │-------> Item (SectionIndexViewItem)
+///  │                                                  │B ││              │B │       └─┘
+///  │                                                  ├─┤│              ├─┤
+///  │                                                  │C ││              │C │
+///  │                                                  ├─┤│              ├─┤
+///  │                                                  │D ││              │D │
+///  │                                                  ├─┤│              ├─┤
+///  │                                                  │E ││              │E │--------------------------->  SectionIndexView
+///  │                  ┌─┐                     ├─┤│              ├─┤
+///  │                  │G │                     │F ││              │F │
+///  │                  └─┘                     ├─┤│              ├─┤
+///  │                     │                         │G ││              │G │
+///  │                     │                         ├─┤│              ├─┤
+///  │                     ⇩                         │H ││              │H │
+///  │           Indicator (UIView)          ├─┤│              ├─┤
+///  │                                                  │ I  ││             │ I  │
+///  │                                                  ├─┤│             ├─┤
+///  │                                                  │J  ││             │J  │
+///  │                                                  ├─┤│             ├─┤
+///  │                                                  │K ││             │K │
+///  │                                                  └─┘│             └─┘
+///  │                                                             │
+///  │                                                             │
+///  │                                                             │
+///  └─────────────────┘
 
 import UIKit
 
 
 //MARK: - SectionIndexViewItem
-public class SectionIndexViewItem: UIView {
-    @objc public var isSelected = false
-    @objc public var indicator: UIView?
+@objc public protocol SectionIndexViewItem where Self: UIView {
+    
+    /// A Boolean value indicating whether the `Item` is in the selected state.
+    /// If the item’s `isSelected` were `false`, SectionIndexView would set `true`  when  touch inside the item’s bounds.
+    /// If the item’s `isSelected` were `true`, SectionIndexView would set `false`  when  touch outside the item’s bounds.
+    var isSelected: Bool { get set }
+    
+    /// Item’s indicator.
+    /// When item is in the selected state, indicator will show, otherwise hide.
+    var indicator: UIView? { get set }
 }
 
-
-
 //MARK: - SectionIndexViewItemView
-public class SectionIndexViewItemView: SectionIndexViewItem {
+
+/// SectionIndexViewItemView is a kind of SectionIndexViewItem
+///
+///   ┌─┐
+///   │ A│-------> Item (SectionIndexViewItem)
+///   └─┘
+///
+public class SectionIndexViewItemView: UIView, SectionIndexViewItem {
+    @objc public var isSelected: Bool = false {
+        didSet {
+            self.selectItem(isSelected)
+        }
+    }
+    @objc public var indicator: UIView?
 
     @objc public var image: UIImage? {
         set { imageView.image = newValue }
@@ -49,9 +111,7 @@ public class SectionIndexViewItemView: SectionIndexViewItem {
         set { selectedView.backgroundColor = newValue }
         get { selectedView.backgroundColor }
     }
-    
-    @objc public var selectedMargin: CGFloat = 0
-    
+        
     private let titleLabel: UILabel = {
         let label = UILabel.init()
         label.adjustsFontSizeToFitWidth = true
@@ -77,16 +137,12 @@ public class SectionIndexViewItemView: SectionIndexViewItem {
         return v
     }()
     
-    @objc public init() {
-        super.init(frame: CGRect.zero)
+    @objc public required init() {
+        super.init(frame: .zero)
         addSubview(selectedView)
         addSubview(imageView)
         addSubview(titleLabel)
         setLayoutConstraint()
-    }
-    
-    private override init(frame: CGRect) {
-        super.init(frame: frame)
     }
     
     required init?(coder: NSCoder) {
@@ -123,11 +179,5 @@ public class SectionIndexViewItemView: SectionIndexViewItem {
         titleLabel.isHighlighted = select
         imageView.isHighlighted = select
         selectedView.isHidden = !select
-    }
-    
-    @objc public override var isSelected: Bool {
-        didSet {
-            self.selectItem(isSelected)
-        }
     }
 }

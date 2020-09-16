@@ -1,10 +1,23 @@
 //
-//  CusViewController.swift
+// https://github.com/0xcj/SectionIndexView
 //
-//  https://github.com/0xcj/SectionIndexView
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
 //
+// The above copyright notice and this permission notice shall be included in all
+// copies or substantial portions of the Software.
 //
-//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+// SOFTWARE.
 
 import UIKit
 
@@ -19,12 +32,12 @@ class CusViewController: UIViewController {
         v.dataSource = self
         return v
     }()
-    private let tableViewVisibleOffset = UIApplication.shared.statusBarFrame.size.height + 44
+    private let adjustedContentInset = UIApplication.shared.statusBarFrame.size.height + 44
     private lazy var indexView: SectionIndexView = {
         let height = CGFloat(self.dataSource.count * 15)
         let frame = CGRect.init(x: view.bounds.width - 20, y: (view.bounds.height - height) * 0.5, width: 20, height: height)
         let v = SectionIndexView.init(frame: frame)
-        v.isItemIndicatorAlwaysInCenter = true
+        v.isItemIndicatorAlwaysInCenterY = true
         v.itemIndicatorHorizontalOffset = -130
         v.delegate = self
         v.dataSource = self
@@ -81,8 +94,7 @@ extension CusViewController: UITableViewDelegate, UITableViewDataSource {
         guard let start = visible.first?.section, let end = visible.last?.section else { return }
         guard let topSection = (start..<end + 1).filter({ section($0, isVisibleIn: tableView) }).first else { return }
         guard let item = self.indexView.item(at: topSection), item.bounds != .zero  else { return }
-        guard self.indexView.selectedItem != item else { return }
-
+        guard !(self.indexView.selectedItem?.isEqual(item) ?? false) else { return }
         self.isOperated = true
         self.indexView.deselectCurrentItem()
         self.indexView.selectItem(at: topSection)
@@ -90,37 +102,20 @@ extension CusViewController: UITableViewDelegate, UITableViewDataSource {
     
     private func section(_ section: Int, isVisibleIn tableView: UITableView) -> Bool {
         let rect = tableView.rect(forSection: section)
-        return tableView.contentOffset.y + self.tableViewVisibleOffset < rect.origin.y + rect.size.height
+        return tableView.contentOffset.y + self.adjustedContentInset < rect.origin.y + rect.size.height
     }
 }
 
 
 extension CusViewController: SectionIndexViewDataSource, SectionIndexViewDelegate {
 
-    func numberOfItems(in sectionIndexView: SectionIndexView) -> Int {
+    func numberOfScetions(in sectionIndexView: SectionIndexView) -> Int {
         return self.dataSource.count
     }
     
     func sectionIndexView(_ sectionIndexView: SectionIndexView, itemAt section: Int) -> SectionIndexViewItem {
-        let item = SectionIndexViewItemView.init()
         let title = self.dataSource[section].key
-        item.title = title
-        item.titleSelectedColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-        item.selectedColor = #colorLiteral(red: 0, green: 0.5291740298, blue: 1, alpha: 1)
-        
-        let indicator = UILabel.init(frame: CGRect.init(x: 0, y: 0, width: 50, height: 50))
-        indicator.text = title
-        indicator.font = UIFont.boldSystemFont(ofSize: 35)
-        indicator.adjustsFontSizeToFitWidth = true
-        indicator.textAlignment = .center
-        indicator.backgroundColor = .clear
-        indicator.textColor = #colorLiteral(red: 0, green: 0.5291740298, blue: 1, alpha: 1)
-        indicator.layer.cornerRadius = 25
-        indicator.layer.borderWidth = 5
-        indicator.layer.borderColor = #colorLiteral(red: 0, green: 0.5291740298, blue: 1, alpha: 1)
-        
-        item.indicator = indicator
-        return item
+        return self.item(with: title)
     }
 
     func sectionIndexView(_ sectionIndexView: SectionIndexView, didSelect section: Int) {
@@ -143,5 +138,29 @@ extension CusViewController: SectionIndexViewDataSource, SectionIndexViewDelegat
             sectionIndexView.hideCurrentItemIndicator()
         }
         self.tableView.panGestureRecognizer.isEnabled = true
+    }
+    
+    private func item(with title: String) -> SectionIndexViewItem {
+        let item = SectionIndexViewItemView.init()
+        item.title = title
+        item.titleSelectedColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+        item.selectedColor = #colorLiteral(red: 0, green: 0.5291740298, blue: 1, alpha: 1)
+        item.indicator = self.indicator(with: title)
+        return item
+    }
+    
+    private func indicator(with title: String) -> UILabel {
+        let indicator = UILabel.init(frame: CGRect.init(x: 0, y: 0, width: 50, height: 50))
+        indicator.text = title
+        indicator.font = UIFont.boldSystemFont(ofSize: 35)
+        indicator.adjustsFontSizeToFitWidth = true
+        indicator.textAlignment = .center
+        indicator.backgroundColor = .clear
+        indicator.textColor = #colorLiteral(red: 0, green: 0.5291740298, blue: 1, alpha: 1)
+        indicator.layer.cornerRadius = 25
+        indicator.layer.borderWidth = 5
+        indicator.layer.borderColor = #colorLiteral(red: 0, green: 0.5291740298, blue: 1, alpha: 1)
+        
+        return indicator
     }
 }
