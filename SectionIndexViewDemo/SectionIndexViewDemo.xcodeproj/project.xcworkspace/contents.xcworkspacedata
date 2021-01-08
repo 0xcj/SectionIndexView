@@ -2,6 +2,18 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:SectionIndexViewDemo.xcodeproj">
+      location = "group:../../Sources/SectionIndexView/SectionIndexView.swift">
+   </FileRef>
+   <FileRef
+      location = "group:../../Sources/SectionIndexView/SectionIndexViewItem.swift">
+   </FileRef>
+   <FileRef
+      location = "group:../../Sources/SectionIndexView/SectionIndexViewItemIndicator.swift">
+   </FileRef>
+   <FileRef
+      location = "group:../../Sources/SectionIndexView/UITableView+SectionIndexView.swift">
+   </FileRef>
+   <FileRef
+      location = "self:">
    </FileRef>
 </Workspace>

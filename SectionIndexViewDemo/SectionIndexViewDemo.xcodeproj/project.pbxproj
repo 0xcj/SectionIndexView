@@ -7,7 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2309EB982382976000275DAA /* UITableView+SectionIndexView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2309EB972382976000275DAA /* UITableView+SectionIndexView.swift */; };
+		077ECC4925A893CD002118E1 /* SectionIndexViewItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 077ECC4525A893CD002118E1 /* SectionIndexViewItem.swift */; };
+		077ECC4A25A893CD002118E1 /* UITableView+SectionIndexView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 077ECC4625A893CD002118E1 /* UITableView+SectionIndexView.swift */; };
+		077ECC4B25A893CD002118E1 /* SectionIndexView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 077ECC4725A893CD002118E1 /* SectionIndexView.swift */; };
+		077ECC4C25A893CD002118E1 /* SectionIndexViewItemIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 077ECC4825A893CD002118E1 /* SectionIndexViewItemIndicator.swift */; };
 		2360484C2438772400642930 /* data.json in Resources */ = {isa = PBXBuildFile; fileRef = 2360484B2438772400642930 /* data.json */; };
 		2363E6B9243747DF009F06DD /* Person.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2363E6B8243747DF009F06DD /* Person.swift */; };
 		238D003B2058280500665FD4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 238D003A2058280500665FD4 /* AppDelegate.swift */; };
@@ -15,14 +18,14 @@
 		238D00402058280500665FD4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 238D003E2058280500665FD4 /* Main.storyboard */; };
 		238D00422058280500665FD4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 238D00412058280500665FD4 /* Assets.xcassets */; };
 		238D00452058280500665FD4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 238D00432058280500665FD4 /* LaunchScreen.storyboard */; };
-		238D00502058287D00665FD4 /* SectionIndexViewItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 238D004D2058287D00665FD4 /* SectionIndexViewItem.swift */; };
-		238D00512058287D00665FD4 /* SectionIndexViewItemIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 238D004E2058287D00665FD4 /* SectionIndexViewItemIndicator.swift */; };
-		238D00522058287D00665FD4 /* SectionIndexView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 238D004F2058287D00665FD4 /* SectionIndexView.swift */; };
 		2395825D205D344500886433 /* CusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2395825C205D344500886433 /* CusViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		2309EB972382976000275DAA /* UITableView+SectionIndexView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+SectionIndexView.swift"; sourceTree = "<group>"; };
+		077ECC4525A893CD002118E1 /* SectionIndexViewItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SectionIndexViewItem.swift; path = ../Sources/SectionIndexView/SectionIndexViewItem.swift; sourceTree = "<group>"; };
+		077ECC4625A893CD002118E1 /* UITableView+SectionIndexView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UITableView+SectionIndexView.swift"; path = "../Sources/SectionIndexView/UITableView+SectionIndexView.swift"; sourceTree = "<group>"; };
+		077ECC4725A893CD002118E1 /* SectionIndexView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SectionIndexView.swift; path = ../Sources/SectionIndexView/SectionIndexView.swift; sourceTree = "<group>"; };
+		077ECC4825A893CD002118E1 /* SectionIndexViewItemIndicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SectionIndexViewItemIndicator.swift; path = ../Sources/SectionIndexView/SectionIndexViewItemIndicator.swift; sourceTree = "<group>"; };
 		2360484B2438772400642930 /* data.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = data.json; sourceTree = "<group>"; };
 		2363E6B8243747DF009F06DD /* Person.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Person.swift; sourceTree = "<group>"; };
 		238D00372058280500665FD4 /* IndexView.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IndexView.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -32,9 +35,6 @@
 		238D00412058280500665FD4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		238D00442058280500665FD4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		238D00462058280500665FD4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		238D004D2058287D00665FD4 /* SectionIndexViewItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SectionIndexViewItem.swift; sourceTree = "<group>"; };
-		238D004E2058287D00665FD4 /* SectionIndexViewItemIndicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SectionIndexViewItemIndicator.swift; sourceTree = "<group>"; };
-		238D004F2058287D00665FD4 /* SectionIndexView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SectionIndexView.swift; sourceTree = "<group>"; };
 		2395825C205D344500886433 /* CusViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CusViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -49,11 +49,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		077ECC4325A89394002118E1 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				077ECC4725A893CD002118E1 /* SectionIndexView.swift */,
+				077ECC4525A893CD002118E1 /* SectionIndexViewItem.swift */,
+				077ECC4825A893CD002118E1 /* SectionIndexViewItemIndicator.swift */,
+				077ECC4625A893CD002118E1 /* UITableView+SectionIndexView.swift */,
+			);
+			name = Sources;
+			sourceTree = "<group>";
+		};
 		238D002E2058280500665FD4 = {
 			isa = PBXGroup;
 			children = (
-				238D004C2058286A00665FD4 /* SectionIndexView */,
 				238D00392058280500665FD4 /* SectionIndexViewDemo */,
+				077ECC4325A89394002118E1 /* Sources */,
 				238D00382058280500665FD4 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -80,17 +91,6 @@
 				2360484B2438772400642930 /* data.json */,
 			);
 			path = SectionIndexViewDemo;
-			sourceTree = "<group>";
-		};
-		238D004C2058286A00665FD4 /* SectionIndexView */ = {
-			isa = PBXGroup;
-			children = (
-				2309EB972382976000275DAA /* UITableView+SectionIndexView.swift */,
-				238D004F2058287D00665FD4 /* SectionIndexView.swift */,
-				238D004D2058287D00665FD4 /* SectionIndexViewItem.swift */,
-				238D004E2058287D00665FD4 /* SectionIndexViewItemIndicator.swift */,
-			);
-			path = SectionIndexView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -169,12 +169,12 @@
 			files = (
 				238D003D2058280500665FD4 /* ViewController.swift in Sources */,
 				238D003B2058280500665FD4 /* AppDelegate.swift in Sources */,
-				238D00502058287D00665FD4 /* SectionIndexViewItem.swift in Sources */,
-				238D00512058287D00665FD4 /* SectionIndexViewItemIndicator.swift in Sources */,
-				238D00522058287D00665FD4 /* SectionIndexView.swift in Sources */,
+				077ECC4C25A893CD002118E1 /* SectionIndexViewItemIndicator.swift in Sources */,
+				077ECC4925A893CD002118E1 /* SectionIndexViewItem.swift in Sources */,
+				077ECC4A25A893CD002118E1 /* UITableView+SectionIndexView.swift in Sources */,
 				2363E6B9243747DF009F06DD /* Person.swift in Sources */,
+				077ECC4B25A893CD002118E1 /* SectionIndexView.swift in Sources */,
 				2395825D205D344500886433 /* CusViewController.swift in Sources */,
-				2309EB982382976000275DAA /* UITableView+SectionIndexView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
