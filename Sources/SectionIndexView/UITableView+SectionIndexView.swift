@@ -19,8 +19,6 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-
-
 ///  ┌─────────────────┐
 ///  │                                                             │
 ///  │                                                  ┌─┐│              ┌─┐
@@ -59,7 +57,7 @@ import UIKit
 
 //MARK: - SectionIndexViewConfiguration
 public final class SectionIndexViewConfiguration: NSObject {
-    
+
     /// Configure this property to assure `SectionIndexView` has correct scrolling when your navigationBar not hidden and  UITableView  use ` contentInsetAdjustmentBehavior`  or ` automaticallyAdjustsScrollViewInsets`  to adjust content.
     /// This value should equal to UITableView’s adjustment content inset.
     ///
@@ -74,36 +72,36 @@ public final class SectionIndexViewConfiguration: NSObject {
     ///         tableView.sectionIndexView(items: items, configuration: configuration)
     /// Default is 0.
     @objc public var adjustedContentInset: CGFloat = 0
-    
+
     /// Configure the `item` size.
     /// Default is CGSize.init(width: 20, height: 15).
     @objc public var itemSize = CGSize.init(width: 20, height: 15)
-    
+
     /// Configure the` indicator` always in centerY of `SectionIndexView`.
     /// Default is false.
     @objc public var isItemIndicatorAlwaysInCenterY = false
-    
+
     /// Configure the `indicator` horizontal offset.
     /// Default is -20.
     @objc public var itemIndicatorHorizontalOffset: CGFloat = -20
-    
+
     /// Configure the `SectionIndexView’s` location.
     /// Default is UIEdgeInsets.zero.
     @objc public var sectionIndexViewOriginInset = UIEdgeInsets.zero
-   
+
 }
 
 //MARK: - UITableView Extension
 
 public extension UITableView {
-    
+
     /// Set sectionIndexView.
     /// - Parameter items: items for sectionIndexView.
     @objc func sectionIndexView(items: [SectionIndexViewItem]) {
         let configuration = SectionIndexViewConfiguration.init()
         self.sectionIndexView(items: items, configuration: configuration)
     }
-    
+
     /// Set sectionIndexView.
     /// - Parameters:
     ///   - items: items for sectionIndexView.
@@ -128,7 +126,6 @@ private extension UITableView {
     }
 }
 
-
 //MARK: - SectionIndexViewManager
 private class SectionIndexViewManager: NSObject, SectionIndexViewDelegate, SectionIndexViewDataSource {
     private struct KVOKey {
@@ -140,7 +137,7 @@ private class SectionIndexViewManager: NSObject, SectionIndexViewDelegate, Secti
     private let indexView: SectionIndexView
     private let items: [SectionIndexViewItem]
     private let configuration: SectionIndexViewConfiguration
-    
+
     init(_ tableView: UITableView, _ items: [SectionIndexViewItem], _ configuration: SectionIndexViewConfiguration) {
         self.tableView = tableView
         self.items = items
@@ -149,31 +146,31 @@ private class SectionIndexViewManager: NSObject, SectionIndexViewDelegate, Secti
         self.indexView.isItemIndicatorAlwaysInCenterY = configuration.isItemIndicatorAlwaysInCenterY
         self.indexView.itemIndicatorHorizontalOffset = configuration.itemIndicatorHorizontalOffset
         super.init()
-        
+
         indexView.delegate = self
         indexView.dataSource = self
         self.setLayoutConstraint()
         tableView.addObserver(self, forKeyPath: KVOKey.contentOffset, options: .new, context: &KVOKey.context)
     }
-    
+
     deinit {
         self.indexView.removeFromSuperview()
         self.tableView?.removeObserver(self, forKeyPath: KVOKey.contentOffset)
     }
-    
-    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+
+    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey: Any]?, context: UnsafeMutableRawPointer?) {
         guard context == &KVOKey.context, keyPath == KVOKey.contentOffset else { return }
         self.tableViewContentOffsetChange()
     }
-    
+
     private func setLayoutConstraint() {
         guard let tableView = self.tableView, let superview = tableView.superview else { return }
         superview.addSubview(self.indexView)
         self.indexView.translatesAutoresizingMaskIntoConstraints = false
         let size = CGSize.init(width: self.configuration.itemSize.width, height: self.configuration.itemSize.height * CGFloat(self.items.count))
         let topOffset = self.configuration.sectionIndexViewOriginInset.bottom - self.configuration.sectionIndexViewOriginInset.top
-        let rightOffset = self.configuration.sectionIndexViewOriginInset.right -  self.configuration.sectionIndexViewOriginInset.left
-        
+        let rightOffset = self.configuration.sectionIndexViewOriginInset.right - self.configuration.sectionIndexViewOriginInset.left
+
         let constraints = [
             self.indexView.centerYAnchor.constraint(equalTo: tableView.centerYAnchor, constant: topOffset),
             self.indexView.widthAnchor.constraint(equalToConstant: size.width),
@@ -182,7 +179,7 @@ private class SectionIndexViewManager: NSObject, SectionIndexViewDelegate, Secti
         ]
         NSLayoutConstraint.activate(constraints)
     }
-    
+
     private func tableViewContentOffsetChange() {
         guard let tableView = self.tableView, !self.indexView.isTouching else { return }
         guard self.isOperated || tableView.isTracking else { return }
@@ -195,14 +192,14 @@ private class SectionIndexViewManager: NSObject, SectionIndexViewDelegate, Secti
         self.indexView.deselectCurrentItem()
         self.indexView.selectItem(at: topSection)
     }
-    
+
     private func section(_ section: Int, isVisibleIn tableView: UITableView) -> Bool {
         let rect = tableView.rect(forSection: section)
         return tableView.contentOffset.y + self.configuration.adjustedContentInset < rect.origin.y + rect.size.height
     }
-    
+
     //MARK: - SectionIndexViewDelegate, SectionIndexViewDataSource
-    public func numberOfScetions(in sectionIndexView: SectionIndexView) -> Int {
+    public func numberOfSections(in sectionIndexView: SectionIndexView) -> Int {
         return self.items.count
     }
 
@@ -225,12 +222,15 @@ private class SectionIndexViewManager: NSObject, SectionIndexViewDelegate, Secti
             tableView.scrollRectToVisible(tableView.rect(forSection: section), animated: false)
         }
     }
-    
-    public func sectionIndexViewToucheEnded(_ sectionIndexView: SectionIndexView) {
+
+    func sectionIndexViewTouchBegan(_ sectionIndexView: SectionIndexView) {
+
+    }
+
+    public func sectionIndexViewTouchEnded(_ sectionIndexView: SectionIndexView) {
         UIView.animate(withDuration: 0.3) {
             sectionIndexView.hideCurrentItemIndicator()
         }
         self.tableView?.panGestureRecognizer.isEnabled = true
     }
 }
-
