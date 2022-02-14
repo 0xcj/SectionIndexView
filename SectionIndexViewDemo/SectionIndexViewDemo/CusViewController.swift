@@ -109,7 +109,7 @@ extension CusViewController: UITableViewDelegate, UITableViewDataSource {
 
 extension CusViewController: SectionIndexViewDataSource, SectionIndexViewDelegate {
 
-    func numberOfScetions(in sectionIndexView: SectionIndexView) -> Int {
+    func numberOfSections(in sectionIndexView: SectionIndexView) -> Int {
         return self.dataSource.count
     }
     
@@ -132,8 +132,11 @@ extension CusViewController: SectionIndexViewDataSource, SectionIndexViewDelegat
             tableView.scrollRectToVisible(tableView.rect(forSection: section), animated: false)
         }
     }
+
+    func sectionIndexViewTouchBegan(_ sectionIndexView: SectionIndexView) {
+    }
     
-    func sectionIndexViewToucheEnded(_ sectionIndexView: SectionIndexView) {
+    func sectionIndexViewTouchEnded(_ sectionIndexView: SectionIndexView) {
         UIView.animate(withDuration: 0.3) {
             sectionIndexView.hideCurrentItemIndicator()
         }
