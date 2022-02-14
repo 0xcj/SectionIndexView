@@ -110,6 +110,11 @@ public class SectionIndexViewItemView: UIView, SectionIndexViewItem {
         set { titleLabel.highlightedTextColor = newValue }
         get { titleLabel.highlightedTextColor }
     }
+    @objc public var textAlignment: NSTextAlignment {
+        set { titleLabel.textAlignment = newValue }
+        get { titleLabel.textAlignment }
+    }
+
     
     @objc public var selectedColor: UIColor? {
         set { selectedView.backgroundColor = newValue }
