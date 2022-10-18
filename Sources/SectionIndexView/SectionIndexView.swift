@@ -80,12 +80,7 @@ public class SectionIndexView: UIView {
     
     @objc public private(set) var selectedItem: SectionIndexViewItem?
     @objc public private(set) var isTouching = false
-    
-    @available(iOS 10.0, *)
-    private lazy var generator: UIImpactFeedbackGenerator = {
-        return UIImpactFeedbackGenerator.init(style: .light)
-    }()
-        
+            
     private var items = [SectionIndexViewItem]()
             
     // MARK: - Func
@@ -106,6 +101,7 @@ public class SectionIndexView: UIView {
     
     @objc public func impact() {
         guard #available(iOS 10.0, *) else { return }
+        var generator: UIImpactFeedbackGenerator = UIImpactFeedbackGenerator.init(style: .light)
         generator.prepare()
         generator.impactOccurred()
     }
