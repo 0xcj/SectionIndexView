@@ -24,7 +24,7 @@ Pod::Spec.new do |s|
   s.source       = { :git => "https://github.com/0xcj/SectionIndexView.git", :tag => s.version }
   s.source_files = "Sources/SectionIndexView/**/*.{h,m,swift}"
   s.license      = "MIT"
-  s.platform     = :ios, "9.0"
+  s.platform     = :ios, "10.0"
   s.swift_versions = ['4.0', '4.2', '5.0']
   s.requires_arc = true
   end
