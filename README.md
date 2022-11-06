@@ -26,7 +26,7 @@ pod 'SectionIndexView'
 #### Swift Package Manager
  - File > Swift Packages > Add Package Dependency
  `https://github.com/0xcj/SectionIndexView.git`
-- Select "Up to Next Major" with "2.0.1"
+- Select "Up to Next Major" with "3.0.0"
 
 ### Manual
 Drop the swift files inside of [SectionIndexViewDemo/SectionIndexView](https://github.com/0xcj/SectionIndexView/tree/master/SectionIndexViewDemo/SectionIndexView) into your project.
